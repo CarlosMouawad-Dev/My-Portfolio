@@ -66,7 +66,8 @@ document.addEventListener('keydown', (e) => {
 
         const material = new THREE.PointsMaterial({
             size: 0.009,
-            color: 0xcabdff,
+            // color: 0xcabdff,
+            color: 0xb3a6f5,
             transparent: true,
             opacity: 0.7,
             blending: THREE.AdditiveBlending
