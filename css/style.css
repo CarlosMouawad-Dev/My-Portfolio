@@ -1,0 +1,786 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --accent: #9d8cf1;
+    --accent-soft: rgba(157, 140, 241, 0.35);
+}
+
+html, body {
+    background-color: #0a0a0c;
+    color: #f5f5f7;
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* --- THREE.JS CANVAS BACKGROUND --- */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- INTERACTIVE CONTENT LAYER --- */
+main {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0c; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #444; }
+
+/* --- NAVIGATION --- */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+    background: rgba(10, 10, 12, 0.2);
+}
+
+nav .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    z-index: 101;
+}
+
+nav .nav-links { display: flex; align-items: center; }
+
+nav .nav-links a {
+    color: #999;
+    text-decoration: none;
+    margin-left: 36px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+nav .nav-links a:hover { color: var(--accent); }
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* --- SECTION LAYOUTS --- */
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 10%;
+}
+
+.eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8a8a93;
+    margin-bottom: 18px;
+}
+
+/* Hero Section */
+#hero { justify-content: center; align-items: flex-start; padding-top: 0; padding-bottom: 0; }
+
+#hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+}
+
+#hero p {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: #8a8a93;
+    max-width: 600px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+#hero .scroll-hint {
+    margin-top: 60px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+}
+
+/* --- ABOUT SECTION --- */
+#about .about-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.photo-frame {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* When you add your photo, put it in the HTML as:
+   <img src="your-photo.jpg" alt="Your Name" class="photo-frame img" />
+   and delete the .photo-placeholder <div> below it. */
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-placeholder {
+    text-align: center;
+    color: #55555f;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+.photo-placeholder .plus {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: #3a3a42;
+    display: block;
+    margin-bottom: 12px;
+}
+
+#about h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+}
+
+#about .about-text p {
+    color: #b0b0b8;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 20px;
+    max-width: 620px;
+}
+
+#about .about-text p:last-child { margin-bottom: 0; }
+
+/* --- EXPERIENCE & SKILLS SECTION --- */
+#experience { padding-bottom: 100px; }
+
+#experience h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+}
+
+#experience .section-intro {
+    color: #8a8a93;
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 560px;
+    margin-bottom: 70px;
+}
+
+.exp-track {
+    position: relative;
+    max-width: 900px;
+}
+
+.exp-track::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.25), rgba(255,255,255,0.03));
+}
+
+.exp-item {
+    position: relative;
+    padding-left: 50px;
+    margin-bottom: 60px;
+}
+
+.exp-item:last-child { margin-bottom: 0; }
+
+.exp-item::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #0a0a0c;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 10px var(--accent-soft);
+}
+
+.exp-item .exp-period {
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #6f6f78;
+    margin-bottom: 10px;
+}
+
+.exp-item h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.exp-item .exp-role {
+    font-size: 0.95rem;
+    color: #8a8a93;
+    margin-bottom: 18px;
+    font-weight: 400;
+}
+
+.exp-item ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.exp-item ul li {
+    color: #b0b0b8;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.exp-item ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #444;
+}
+
+.exp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.exp-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #b0b0b8;
+    background: rgba(255,255,255,0.02);
+}
+
+/* Extra Skills */
+.skills-panel {
+    margin-top: 90px;
+    max-width: 900px;
+}
+
+.skills-panel h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 26px;
+    font-weight: 700;
+}
+
+.skills-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.skills-group .skills-group-label {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #6f6f78;
+    margin-bottom: 14px;
+}
+
+.skills-group .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.skills-group .exp-tag { background: rgba(255,255,255,0.03); }
+
+/* --- CERTIFICATIONS SECTION --- */
+#certifications h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin-bottom: 50px;
+    letter-spacing: -1px;
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.cert-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 34px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border 0.3s ease;
+}
+
+.cert-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-soft);
+}
+
+.cert-card .cert-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+}
+
+.cert-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+}
+
+.cert-card .cert-issuer {
+    font-size: 0.85rem;
+    color: #8a8a93;
+    margin-bottom: 14px;
+}
+
+.cert-card .cert-date {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #555560;
+}
+
+/* --- DESIGN WORK / GALLERY SECTION --- */
+#gallery h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+}
+
+#gallery .section-intro {
+    color: #8a8a93;
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 560px;
+    margin-bottom: 60px;
+}
+
+/* Masonry-style layout: items span different row heights so the grid
+   doesn't feel like a flat, uniform stock-photo wall. */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 220px;
+    gap: 22px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-soft);
+}
+
+/* Vary a few tile sizes for a premium, editorial feel.
+   Apply these modifier classes to any .gallery-item you like. */
+/* .gallery-item.tall { grid-row: span 2; }
+.gallery-item.wide { grid-column: span 2; } */
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-item:hover img { transform: scale(1.06); }
+
+/* Placeholder tile — same visual language as the About photo frame.
+   Delete the .gallery-placeholder div and drop in an <img> when ready. */
+.gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #55555f;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+.gallery-placeholder .plus {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #3a3a42;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Caption overlay revealed on hover */
+.gallery-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 18px 20px;
+    background: linear-gradient(to top, rgba(10,10,12,0.92) 0%, rgba(10,10,12,0) 100%);
+    transform: translateY(10px);
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.gallery-item:hover .gallery-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-caption h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.gallery-tool {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-soft);
+    padding: 3px 9px;
+    border-radius: 20px;
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(10, 10, 12, 0.55);
+    backdrop-filter: blur(6px);
+}
+
+/* Lightbox (click-to-enlarge) */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 6, 8, 0.92);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 40px;
+}
+
+.lightbox.active { opacity: 1; pointer-events: auto; }
+
+.lightbox-content {
+    max-width: 900px;
+    max-height: 80vh;
+    width: 100%;
+    text-align: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 10px;
+    border: 1px solid var(--accent-soft);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.lightbox-caption {
+    margin-top: 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    color: #f5f5f7;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #f5f5f7;
+    background: transparent;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --- CONTACT SECTION --- */
+#contact { text-align: center; align-items: center; }
+
+#contact h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    margin-bottom: 20px;
+}
+
+#contact .section-intro {
+    color: #8a8a93;
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+
+.contact-details {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.contact-detail { text-align: center; }
+
+.contact-detail .label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6f6f78;
+    margin-bottom: 10px;
+}
+
+.contact-detail a {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    color: #f5f5f7;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.contact-detail a:hover { border-color: var(--accent); color: var(--accent); }
+
+.cta-btn {
+    display: inline-block;
+    padding: 18px 40px;
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.cta-btn:hover { background: var(--accent); color: #0a0a0c; border-color: var(--accent); }
+
+footer {
+    padding: 40px 10%;
+    text-align: center;
+    color: #444;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 900px) {
+    #about .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .photo-frame { max-width: 320px; margin: 0 auto; }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    nav { padding: 25px 6%; }
+    section { padding: 120px 6%; }
+
+    .menu-toggle { display: flex; }
+
+    nav .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100vw;
+        height: 100vh;
+        background: #0a0a0c;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 100;
+    }
+
+    nav .nav-links.active { right: 0; }
+
+    nav .nav-links a {
+        margin: 20px 0;
+        font-size: 1.8rem;
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        color: #8a8a93;
+    }
+
+    nav .nav-links a:hover { color: var(--accent); }
+
+    .menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .contact-details { gap: 40px; }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 260px;
+    }
+    .gallery-item.wide { grid-column: span 1; }
+    .gallery-item.tall { grid-row: span 1; }
+
+    .lightbox-close { top: 16px; right: 16px; }
+}
+
+
+
+
+
+
+#hero {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.hero-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LEFT SIDE */
+.hero-text {
+    max-width: 600px;
+}
+
+/* RIGHT SIDE */
+.hero-image {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* CIRCLE IMAGE */
+.hero-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 30px var(--accent-soft);
+}
+
+.hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-image {
+        justify-content: center;
+    }
+
+    .hero-avatar {
+        width: 130px;
+        height: 130px;
+    }
+}
