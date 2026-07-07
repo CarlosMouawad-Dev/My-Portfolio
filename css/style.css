@@ -758,7 +758,7 @@ footer {
     @media (max-width: 900px) {
         #about .about-grid {
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 23%;
         }
 
         /* Put the text block first */
