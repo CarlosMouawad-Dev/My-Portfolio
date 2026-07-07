@@ -12,7 +12,7 @@ document.querySelectorAll('.gallery-item').forEach(item => {
 
         lightboxImg.src = img.src;
         lightboxImg.alt = item.dataset.title || '';
-        lightboxCaption.textContent = `${item.dataset.title || ''} — ${item.dataset.tool || ''}`;
+        lightboxCaption.textContent = item.dataset.title || '';
         lightbox.classList.add('active');
     });
 });
