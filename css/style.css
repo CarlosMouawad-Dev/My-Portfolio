@@ -79,17 +79,23 @@ main {
 
 /* --- NAVIGATION --- */
 nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px 10%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-    backdrop-filter: blur(5px);
-    background: rgba(10, 10, 12, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  background: transparent;
+  backdrop-filter: none;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+nav.scrolled {
+  backdrop-filter: blur(5px);
+  background: rgba(10, 10, 12, 0.2);
 }
 
 nav .logo {
