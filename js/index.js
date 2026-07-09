@@ -1,5 +1,4 @@
-
-// --- GALLERY LIGHTBOX ---
+/// --- GALLERY LIGHTBOX ---
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCaption = document.getElementById('lightbox-caption');
@@ -84,24 +83,68 @@ const material = new THREE.PointsMaterial({
 const particleMesh = new THREE.Points(geometry, material);
 scene.add(particleMesh);
 
-const starsGeometry = new THREE.BufferGeometry();
-const starsCount = 1200;
-const starPositions = new Float32Array(starsCount * 3);
+// --- CODE-ICON STAR FIELD (replaces old plain square star field) ---
 
-for (let i = 0; i < starsCount * 3; i++) {
-    starPositions[i] = (Math.random() - 0.5) * 15;
+// helper: turn text into a sprite texture
+function createIconTexture(text, color = '#c9b8ff') {
+    const size = 128;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, size, size);
+    ctx.font = 'bold 40px "Courier New", monospace';
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, size / 2, size / 2);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    return texture;
 }
 
-starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-const starsMaterial = new THREE.PointsMaterial({
-    size: 0.015,
-    color: 0x8a8a93,
-    transparent: true,
-    opacity: 0.4
-});
+const iconTexA = createIconTexture('</>');
+const iconTexB = createIconTexture('...');
 
-const starField = new THREE.Points(starsGeometry, starsMaterial);
+// build one field of points using a given icon texture
+function buildIconField(count, texture, size) {
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i++) {
+        // spread x/y wide, but keep z pushed further back (-10 to -2)
+        // so nothing drifts right up close to the camera and looks huge
+        if (i % 3 === 2) {
+            positions[i] = -Math.random() * 8 - 2; // z: -2 to -10
+        } else {
+            positions[i] = (Math.random() - 0.5) * 15; // x, y
+        }
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const mat = new THREE.PointsMaterial({
+        size,
+        map: texture,
+        transparent: true,
+        alphaTest: 0.1,   // clips the square edges, keeps only the glyph
+        depthWrite: false,
+        sizeAttenuation: true
+    });
+
+    return new THREE.Points(geo, mat);
+}
+
+const starsCount = 120; // fewer icons total
+const fieldA = buildIconField(starsCount / 2, iconTexA, 0.24);
+const fieldB = buildIconField(starsCount / 2, iconTexB, 0.24);
+
+// group them so the existing animate() code still works unchanged
+const starField = new THREE.Group();
+starField.add(fieldA, fieldB);
 scene.add(starField);
+
+// --- END CODE-ICON STAR FIELD ---
 
 const mouse = { x: 0, y: 0 };
 const targetMouse = { x: 0, y: 0 };
