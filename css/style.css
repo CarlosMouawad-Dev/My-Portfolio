@@ -89,11 +89,13 @@ nav {
   align-items: center;
   z-index: 10;
   background: transparent;
-  backdrop-filter: none;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
+  transition: background 0.3s ease, -webkit-backdrop-filter 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 nav.scrolled {
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   background: rgba(10, 10, 12, 0.2);
 }
