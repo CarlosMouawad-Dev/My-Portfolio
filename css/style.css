@@ -20,9 +20,16 @@
 }
 
 .logo img {
-width: 150px;
-height: auto;
-display: block;
+    width: 150px;
+    height: auto;
+    display: block;
+}
+
+@media only screen and (max-width:768px) {
+    .logo img {
+        width: 100px;
+
+    }
 }
 
 html,
