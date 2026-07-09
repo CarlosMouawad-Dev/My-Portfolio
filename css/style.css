@@ -807,7 +807,7 @@ footer {
 
     #about .about-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 25%;
     }
 
     .photo-frame {
@@ -944,7 +944,7 @@ footer {
     object-fit: cover;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .hero-container {
         flex-direction: column;
         text-align: center;
