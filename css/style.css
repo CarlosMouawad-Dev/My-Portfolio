@@ -298,6 +298,9 @@ section {
 }
 
 /* --- ABOUT SECTION --- */
+
+
+
 #about .about-grid {
     display: grid;
     grid-template-columns: 340px 1fr;
@@ -892,6 +895,13 @@ footer {
             grid-template-columns: 1fr;
             gap: 23%;
         }
+
+        #about{
+
+            margin-bottom: 30px;
+        } 
+
+
 
         /* Put the text block first */
         #about .about-grid>div:last-child {
