@@ -9,6 +9,33 @@
     --accent-soft: rgba(157, 140, 241, 0.35);
 }
 
+.exp-highlight {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.exp-highlight img {
+    width: 90px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.exp-highlight h4 {
+    margin: 0 0 5px;
+    font-size: 18px;
+}
+
+.exp-highlight p {
+    margin: 0;
+    font-size: 14px;
+}
+
 .logo {
     display: flex;
     align-items: center;
